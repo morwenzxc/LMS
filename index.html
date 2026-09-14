@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>La Meva Salut - Informació</title>
+
+    <style>
+        :root {
+            --blau: #6aaae4;
+            --blau-fosc: #2f6fae;
+            --blau-clar: #eaf4fc;
+            --gris: #555555;
+            --fons: #f5f8fb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--fons);
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        /* CAPÇALERA */
+
+        .capcalera {
+            background: white;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .capcalera-superior {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-ics {
+            width: 250px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .franja-blava {
+            height: 12px;
+            background: var(--blau);
+        }
+
+        .titol-capcalera {
+            background: var(--blau);
+            color: white;
+            padding: 35px 30px;
+            text-align: center;
+        }
+
+        .titol-capcalera h1 {
+            max-width: 1000px;
+            margin: 0 auto;
+            font-size: 30px;
+            line-height: 1.3;
+        }
+
+        .subtitol {
+            margin-top: 12px;
+            font-size: 17px;
+            opacity: 0.95;
+        }
+
+        /* SELECTOR D'IDIOMA */
+
+        .selector-container {
+            max-width: 900px;
+            margin: 25px auto 0;
+            padding: 0 20px;
+        }
+
+        .selector-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--blau-fosc);
+        }
+
+        select {
+            width: 100%;
+            max-width: 350px;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid var(--blau);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* CONTINGUT */
+
+        .noticia {
+            max-width: 900px;
+            margin: 25px auto 40px;
+            padding: 0 20px;
+        }
+
+        .noticia h2 {
+            color: var(--blau-fosc);
+            font-size: 26px;
+            line-height: 1.3;
+            margin-bottom: 25px;
+        }
+
+        .noticia h3 {
+            color: var(--blau-fosc);
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+
+        .noticia p {
+            margin: 10px 0;
+        }
+
+        .resum {
+            background: var(--blau-clar);
+            border-left: 5px solid var(--blau);
+            padding: 18px 20px;
+            margin-top: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* PEU */
+
+        .peu {
+            text-align: center;
+            color: var(--gris);
+            font-size: 13px;
+            padding: 20px;
+        }
+
+        /* MÒBILS */
+
+        @media (max-width: 600px) {
+
+            .capcalera-superior {
+                padding: 15px 20px;
+            }
+
+            .logo-ics {
+                width: 190px;
+            }
+
+            .titol-capcalera {
+                padding: 25px 20px;
+            }
+
+            .titol-capcalera h1 {
+                font-size: 23px;
+            }
+
+            .noticia h2 {
+                font-size: 22px;
+            }
+
+            body {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CAPÇALERA -->
+
+    <header class="capcalera">
+
+        <div class="capcalera-superior">
+            <img src="logo-ics.png"
+                 alt="Institut Català de la Salut"
+                 class="logo-ics">
+        </div>
+
+        <div class="franja-blava"></div>
+
+        <div class="titol-capcalera">
+            <h1 id="titol-capcalera"></h1>
+            <div class="subtitol" id="subtitol-capcalera"></div>
+        </div>
+
+    </header>
+
+
+    <!-- SELECTOR D'IDIOMA -->
+
+    <main>
+
+        <div class="selector-container">
+
+            <label for="idioma" id="label-idioma">
+                Selecciona l'idioma:
+            </label>
+
+            <select id="idioma">
+                <option value="ca">Català</option>
+                <option value="es">Castellano</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+                <option value="ber">Tamazight</option>
+                <option value="ro">Română</option>
+            </select>
+
+        </div>
+
+
+        <!-- NOTÍCIA -->
+
+        <article class="noticia">
+
+            <h2 id="titol"></h2>
+
+            <div id="contingutNoticia"></div>
+
+        </article>
+
+    </main>
+
+
+    <!-- PEU -->
+
+    <footer class="peu">
+        <span id="peu-text"></span>
+    </footer>
+
+
+    <script>
+
+        const continguts = {
+
+            /* =========================
+               CATALÀ
+            ========================= */
+
+            ca: {
+                nom: "Català",
+
+                titol: "Canvia l'accés a La Meva Salut: ja no serà amb contrasenya, sinó amb idCAT Mòbil",
+
+                subtitol: "Informació important per a la ciutadania",
+
+                label: "Selecciona l'idioma:",
+
+                contingut: `
+                    <p>El Departament de Salut de Catalunya modificarà progressivament el sistema d'accés a La Meva Salut, substituint les contrasenyes pel sistema d'identificació digital idCAT Mòbil.</p>
+
+                    <h3>1. Substitució progressiva de les contrasenyes</h3>
+
+                    <p>Actualment, els usuaris poden accedir a La Meva Salut mitjançant una contrasenya personal o utilitzant idCAT Mòbil. Salut retirarà progressivament l'opció d'accés mitjançant contrasenya i deixarà idCAT Mòbil com a principal via d'identificació.</p>
+
+                    <p>Aquest canvi respon a la necessitat de reforçar la seguretat i adaptar-se a les normatives europees de protecció de dades.</p>
+
+                    <h3>2. Com funciona l'idCAT Mòbil?</h3>
+
+                    <p>L'idCAT Mòbil no és una aplicació, per tant, no cal descarregar res. És un sistema gratuït d'identificació digital que vincula el document d'identitat de la persona amb el seu número de telèfon mòbil.</p>
+
+                    <p>Per utilitzar-lo, cal donar-se d'alta prèviament. Un cop registrat, per accedir a La Meva Salut només cal introduir el document d'identitat i el telèfon associat. El sistema enviarà un codi d'un sol ús per SMS que s'haurà d'introduir per completar la identificació.</p>
+
+                    <h3>3. Nou sistema d'accés delegat per a familiars</h3>
+
+                    <p>Salut està preparant una funcionalitat que permetrà autoritzar familiars o persones de confiança a gestionar el perfil de La Meva Salut d'una altra persona.</p>
+
+                    <p>La persona autoritzada podrà accedir als perfils dels usuaris que li hagin donat permís des del seu propi compte, sense necessitat de conèixer les seves credencials.</p>
+
+                    <p>Aquesta mesura serà especialment útil per a persones grans o amb dificultats digitals. Actualment, una opció similar ja existeix per a menors i persones tutelades, però es vol ampliar també als adults.</p>
+
+                    <h3>4. Calendari previst</h3>
+
+                    <p>La transició es farà de manera progressiva i està previst que finalitzi a principis de 2027. Fins al gener, els usuaris podran continuar sol·licitant i utilitzant les contrasenyes existents.</p>
+
+                    <div class="resum">
+                        <strong>En resum</strong>
+
+                        <p>El principal canvi serà la substitució de les contrasenyes per l'idCAT Mòbil com a sistema d'accés a La Meva Salut.</p>
+
+                        <p>Paral·lelament, es crearà un sistema que facilitarà que familiars o persones de confiança puguin gestionar els perfils d'altres usuaris, especialment en el cas de persones grans.</p>
+                    </div>
+                `,
+
+                peu: "Informació per a les persones usuàries de La Meva Salut"
+            },
+
+
+            /* =========================
+               CASTELLANO
+            ========================= */
+
+            es: {
+                nom: "Castellano",
+
+                titol: "Cambia el acceso a La Meva Salut: ya no será con contraseña, sino con idCAT Mòbil",
+
+                subtitol: "Información importante para la ciudadanía",
+
+                label: "Selecciona el idioma:",
+
+                contingut: `
+                    <p>El Departamento de Salud de Cataluña modificará progresivamente el sistema de acceso a La Meva Salut, sustituyendo las contraseñas por el sistema de identificación digital idCAT Mòbil.</p>
+
+                    <h3>1. Sustitución progresiva de las contraseñas</h3>
+
+                    <p>Actualmente, los usuarios pueden acceder a La Meva Salut mediante una contraseña personal o utilizando idCAT Mòbil. Salud retirará progresivamente la opción de acceso mediante contraseña y dejará idCAT Mòbil como principal vía de identificación.</p>
+
+                    <p>Este cambio responde a la necesidad de reforzar la seguridad y adaptarse a las normativas europeas de protección de datos.</p>
+
+                    <h3>2. ¿Cómo funciona el idCAT Mòbil?</h3>
+
+                    <p>El idCAT Mòbil no es una aplicación, por lo tanto, no es necesario descargar nada. Es un sistema gratuito de identificación digital que vincula el documento de identidad de la persona con su número de teléfono móvil.</p>
+
+                    <p>Para utilizarlo, es necesario registrarse previamente. Una vez registrado, para acceder a La Meva Salut solo hay que introducir el documento de identidad y el teléfono asociado. El sistema enviará un código de un solo uso por SMS que deberá introducirse para completar la identificación.</p>
+
+                    <h3>3. Nuevo sistema de acceso delegado para familiares</h3>
+
+                    <p>Salud está preparando una funcionalidad que permitirá autorizar a familiares o personas de confianza para gestionar el perfil de La Meva Salut de otra persona.</p>
+
+                    <p>La persona autorizada podrá acceder a los perfiles de los usuarios que le hayan dado permiso desde su propia cuenta, sin necesidad de conocer sus credenciales.</p>
+
+                    <p>Esta medida será especialmente útil para personas mayores o con dificultades digitales. Actualmente, una opción similar ya existe para menores y personas tuteladas, pero se quiere ampliar también a los adultos.</p>
+
+                    <h3>4. Calendario previsto</h3>
+
+                    <p>La transición se hará de manera progresiva y está previsto que finalice a principios de 2027. Hasta enero, los usuarios podrán seguir solicitando y utilizando las contraseñas existentes.</p>
+
+                    <div class="resum">
+                        <strong>En resumen</strong>
+
+                        <p>El principal cambio será la sustitución de las contraseñas por idCAT Mòbil como sistema de acceso a La Meva Salut.</p>
+
+                        <p>Paralelamente, se creará un sistema que facilitará que familiares o personas de confianza puedan gestionar los perfiles de otros usuarios, especialmente en el caso de personas mayores.</p>
+                    </div>
+                `,
+
+                peu: "Información para las personas usuarias de La Meva Salut"
+            },
+
+
+            /* =========================
+               ENGLISH
+            ========================= */
+
+            en: {
+                nom: "English",
+
+                titol: "Access to La Meva Salut is changing: passwords will be replaced by idCAT Mòbil",
+
+                subtitol: "Important information for citizens",
+
+                label: "Select language:",
+
+                contingut: `
+                    <p>The Catalan Department of Health will gradually change the access system for La Meva Salut, replacing passwords with the idCAT Mòbil digital identification system.</p>
+
+                    <h3>1. Gradual replacement of passwords</h3>
+
+                    <p>Currently, users can access La Meva Salut using a personal password or idCAT Mòbil. Health authorities will gradually remove password access and make idCAT Mòbil the main identification method.</p>
+
+                    <p>This change aims to strengthen security and adapt the system to European data protection regulations.</p>
+
+                    <h3>2. How does idCAT Mòbil work?</h3>
+
+                    <p>idCAT Mòbil is not an application, so there is nothing to download. It is a free digital identification system that links a person's identity document to their mobile phone number.</p>
+
+                    <p>To use it, you must register first. Once registered, accessing La Meva Salut only requires entering your identity document and associated phone number. The system will send a one-time code by SMS, which must be entered to complete identification.</p>
+
+                    <h3>3. New delegated access system for family members</h3>
+
+                    <p>Health authorities are preparing a feature that will allow family members or trusted people to manage another person's La Meva Salut profile with their permission.</p>
+
+                    <p>The authorised person will be able to access the profiles of users who have granted permission from their own account, without needing to know their passwords.</p>
+
+                    <p>This will be especially useful for older people or people with digital difficulties. A similar option already exists for minors and people under guardianship, and it is planned to extend it to adults.</p>
+
+                    <h3>4. Planned timetable</h3>
+
+                    <p>The transition will take place gradually and is expected to be completed at the beginning of 2027. Until January, users will still be able to request and use existing passwords.</p>
+
+                    <div class="resum">
+                        <strong>In summary</strong>
+
+                        <p>The main change will be the replacement of passwords by idCAT Mòbil as the access system for La Meva Salut.</p>
+
+                        <p>At the same time, a system will be created to make it easier for family members or trusted people to manage other users' profiles, especially for older people.</p>
+                    </div>
+                `,
+
+                peu: "Information for La Meva Salut users"
+            },
+
+
+            /* =========================
+               FRANÇAIS
+            ========================= */
+
+            fr: {
+                nom: "Français",
+
+                titol: "L'accès à La Meva Salut change : le mot de passe sera remplacé par idCAT Mòbil",
+
+                subtitol: "Informations importantes pour les citoyens",
+
+                label: "Sélectionnez la langue :",
+
+                contingut: `
+                    <p>Le Département de la Santé de Catalogne modifiera progressivement le système d'accès à La Meva Salut, en remplaçant les mots de passe par le système d'identification numérique idCAT Mòbil.</p>
+
+                    <h3>1. Remplacement progressif des mots de passe</h3>
+
+                    <p>Actuellement, les utilisateurs peuvent accéder à La Meva Salut avec un mot de passe personnel ou en utilisant idCAT Mòbil. Le Département de la Santé supprimera progressivement l'accès par mot de passe et fera d'idCAT Mòbil le principal moyen d'identification.</p>
+
+                    <p>Ce changement vise à renforcer la sécurité et à adapter le système aux réglementations européennes relatives à la protection des données.</p>
+
+                    <h3>2. Comment fonctionne idCAT Mòbil ?</h3>
+
+                    <p>idCAT Mòbil n'est pas une application : il n'est donc pas nécessaire de télécharger quoi que ce soit. Il s'agit d'un système gratuit d'identification numérique qui associe le document d'identité d'une personne à son numéro de téléphone portable.</p>
+
+                    <p>Pour l'utiliser, il faut d'abord s'inscrire. Une fois inscrit, pour accéder à La Meva Salut, il suffit d'indiquer le document d'identité et le numéro de téléphone associé. Le système enverra un code à usage unique par SMS, qui devra être introduit pour terminer l'identification.</p>
+
+                    <h3>3. Nouveau système d'accès délégué pour les proches</h3>
+
+                    <p>Le Département de la Santé prépare une fonctionnalité permettant d'autoriser des proches ou des personnes de confiance à gérer le profil La Meva Salut d'une autre personne.</p>
+
+                    <p>La personne autorisée pourra accéder aux profils des utilisateurs qui lui ont donné leur permission depuis son propre compte, sans avoir besoin de connaître leurs identifiants.</p>
+
+                    <p>Cette mesure sera particulièrement utile pour les personnes âgées ou rencontrant des difficultés numériques. Une option similaire existe déjà pour les mineurs et les personnes sous tutelle, mais elle devrait également être étendue aux adultes.</p>
+
+                    <h3>4. Calendrier prévu</h3>
+
+                    <p>La transition se fera progressivement et devrait être terminée au début de l'année 2027. Jusqu'en janvier, les utilisateurs pourront continuer à demander et à utiliser les mots de passe existants.</p>
+
+                    <div class="resum">
+                        <strong>En résumé</strong>
+
+                        <p>Le principal changement sera le remplacement des mots de passe par idCAT Mòbil comme système d'accès à La Meva Salut.</p>
+
+                        <p>Parallèlement, un système facilitera la gestion des profils d'autres utilisateurs par des proches ou des personnes de confiance, notamment pour les personnes âgées.</p>
+                    </div>
+                `,
+
+                peu: "Informations pour les utilisateurs de La Meva Salut"
+            },
+
+
+            /* =========================
+               ÀRAB
+            ========================= */
+
+            ar: {
+                nom: "العربية",
+
+                titol: "تغيير طريقة الدخول إلى La Meva Salut: سيتم استبدال كلمة المرور بنظام idCAT Mòbil",
+
+                subtitol: "معلومات مهمة للمواطنين",
+
+                label: "اختر اللغة:",
+
+                contingut: `
+                    <p>ستقوم وزارة الصحة في كتالونيا بتغيير نظام الدخول إلى La Meva Salut تدريجياً، حيث سيتم استبدال كلمات المرور بنظام التعريف الرقمي idCAT Mòbil.</p>
+
+                    <h3>1. الاستبدال التدريجي لكلمات المرور</h3>
+
+                    <p>يمكن للمستخدمين حالياً الدخول إلى La Meva Salut باستخدام كلمة مرور شخصية أو باستخدام idCAT Mòbil. وستتم إزالة إمكانية الدخول بواسطة كلمة المرور تدريجياً، ليصبح idCAT Mòbil وسيلة التعريف الرئيسية.</p>
+
+                    <p>يهدف هذا التغيير إلى تعزيز الأمان والتكيف مع اللوائح الأوروبية المتعلقة بحماية البيانات.</p>
+
+                    <h3>2. كيف يعمل idCAT Mòbil؟</h3>
+
+                    <p>إن idCAT Mòbil ليس تطبيقاً، لذلك لا حاجة إلى تنزيل أي شيء. إنه نظام مجاني للتعريف الرقمي يربط وثيقة هوية الشخص برقم هاتفه المحمول.</p>
+
+                    <p>لاستخدامه، يجب التسجيل مسبقاً. بعد التسجيل، يكفي للدخول إلى La Meva Salut إدخال وثيقة الهوية ورقم الهاتف المرتبط بها. سيرسل النظام رمزاً لمرة واحدة عبر رسالة نصية قصيرة، ويجب إدخاله لإكمال عملية التعريف.</p>
+
+                    <h3>3. نظام جديد للدخول المفوض لأفراد العائلة</h3>
+
+                    <p>تعمل وزارة الصحة على إعداد وظيفة تتيح تفويض أفراد العائلة أو الأشخاص الموثوق بهم لإدارة ملف La Meva Salut الخاص بشخص آخر.</p>
+
+                    <p>سيتمكن الشخص المفوض من الدخول إلى ملفات المستخدمين الذين منحوه الإذن من خلال حسابه الخاص، دون الحاجة إلى معرفة كلمات المرور الخاصة بهم.</p>
+
+                    <p>سيكون هذا الإجراء مفيداً بشكل خاص لكبار السن أو الأشخاص الذين يواجهون صعوبات في استخدام الوسائل الرقمية. توجد حالياً إمكانية مشابهة للقاصرين والأشخاص الخاضعين للوصاية، ومن المخطط توسيعها لتشمل البالغين أيضاً.</p>
+
+                    <h3>4. الجدول الزمني المتوقع</h3>
+
+                    <p>سيتم الانتقال تدريجياً، ومن المتوقع أن يكتمل في بداية عام 2027. وحتى شهر يناير، سيتمكن المستخدمون من الاستمرار في طلب كلمات المرور الحالية واستخدامها.</p>
+
+                    <div class="resum">
+                        <strong>باختصار</strong>
+
+                        <p>سيتمثل التغيير الرئيسي في استبدال كلمات المرور بنظام idCAT Mòbil للدخول إلى La Meva Salut.</p>
+
+                        <p>وبالتوازي، سيتم إنشاء نظام يسهل على أفراد العائلة أو الأشخاص الموثوق بهم إدارة ملفات مستخدمين آخرين، وخاصة كبار السن.</p>
+                    </div>
+                `,
+
+                peu: "معلومات لمستخدمي La Meva Salut"
+            },
+
+
+            /* =========================
+               AMAZIGH
+            ========================= */
+
+            ber: {
+                nom: "Amazigh",
+
+                titol: "Bedden l’accès ar La Meva Salut: ur d-yili ara s wawal n uɛeddi, maca s idCAT Mòbil",
+
+                subtitol: "Talɣut ixeddmen i yimdanen",
+
+                label: "Fren tutlayt:",
+
+                contingut: `
+                    <p>Tanmehla n Tɣellist n Catalunya ad tbeddel s wudem amecwar amud n unekcum ɣer La Meva Salut, ad tessemres idCAT Mòbil deg umḍiq n wawalen n uɛeddi.</p>
+
+                    <h3>1. Asbeddi amecwar n wawalen n uɛeddi</h3>
+
+                    <p>Ass-a, iseqdacen zemren ad kecmen ɣer La Meva Salut s wawal n uɛeddi udmawan neɣ s idCAT Mòbil. Ad yettwakkes unekcum s wawal n uɛeddi s wudem amecwar, ad yili idCAT Mòbil d allal agejdan n usulu.</p>
+
+                    <p>Asbeddi-agi yella iwakken ad yettnerni lḥifḍ n tɣellist, yerna ad yeddu akked yilugan n Uropa ɣef uḥraz n yisefka.</p>
+
+                    <h3>2. Amek i yxedem idCAT Mòbil?</h3>
+
+                    <p>idCAT Mòbil mačči d asnas i yettwasneḍ. Ur tesriḍ ara ad t-sidered. D allal amecwar n usulu ilelli i yeqqnen timagit n umdan akked uṭṭun n tiliɣri-s.</p>
+
+                    <p>Iwakken ad t-tesqedceḍ, ilaq ad tjerrbeḍ ad t-tesekneḍ yakan. Mi teskneḍ, ad teskecmeḍ timagit-nneɣ akked uṭṭun n tiliɣri. Ad d-yas yiwen n tengalt s SMS, ilaq ad t-teskecmeḍ iwakken ad tfakḍ asulu.</p>
+
+                    <h3>3. Anagraw amaynut n unekcum s tneɣruft i twacult</h3>
+
+                    <p>Tanmehla n Tɣellist thegga tameẓẓyt ara yeǧǧen imawlan neɣ imdanen i yettwasnen ad sferken amedya n La Meva Salut n umdan-nniḍen.</p>
+
+                    <p>Amdan yettwasnen ad yezmer ad yekcem ɣer yimedya n yiseqdacen i as-yefkan tasiregt, seg umiḍan-is udmawan, war ma yeḥwaǧ ad issen iwalen-nsen n uɛeddi.</p>
+
+                    <p>Tameẓẓyt-agi ad tili d talalt i yimɣaren neɣ i yimdanen yesɛan uguren deg useqdec n wallalen imḍiqen.</p>
+
+                    <h3>4. Akud i yettwarǧan</h3>
+
+                    <p>Asnifel ad yili s wudem amecwar, yerna yettwarǧa ad yemmed deg tazwara n useggas 2027. Armi d yennayer, iseqdacen zemren ad suter ad seqdacen iwalen-nsen n uɛeddi i yellan.</p>
+
+                    <div class="resum">
+                        <strong>S umata</strong>
+
+                        <p>Asbeddi agejdan d asemselsi n wawalen n uɛeddi s idCAT Mòbil i unekcum ɣer La Meva Salut.</p>
+
+                        <p>Daɣen, ad yili unagraw ara yessifsusen i twacult neɣ i yimdanen i yettwasnen ad sferken imedya n yiseqdacen-nniḍen.</p>
+                    </div>
+                `,
+
+                peu: "Talɣut i yiseqdacen n La Meva Salut"
+            },
+
+
+            /* =========================
+               ROMÂNĂ
+            ========================= */
+
+            ro: {
+                nom: "Română",
+
+                titol: "Se schimbă accesul la La Meva Salut: parola va fi înlocuită de idCAT Mòbil",
+
+                subtitol: "Informații importante pentru cetățeni",
+
+                label: "Selectați limba:",
+
+                contingut: `
+                    <p>Departamentul de Sănătate din Catalonia va modifica treptat sistemul de acces la La Meva Salut, înlocuind parolele cu sistemul de identificare digitală idCAT Mòbil.</p>
+
+                    <h3>1. Înlocuirea treptată a parolelor</h3>
+
+                    <p>În prezent, utilizatorii pot accesa La Meva Salut folosind o parolă personală sau idCAT Mòbil. Departamentul de Sănătate va elimina treptat accesul prin parolă și va utiliza idCAT Mòbil ca principală metodă de identificare.</p>
+
+                    <p>Această schimbare are ca scop consolidarea securității și adaptarea la reglementările europene privind protecția datelor.</p>
+
+                    <h3>2. Cum funcționează idCAT Mòbil?</h3>
+
+                    <p>idCAT Mòbil nu este o aplicație, prin urmare nu trebuie descărcat nimic. Este un sistem gratuit de identificare digitală care asociază documentul de identitate al unei persoane cu numărul său de telefon mobil.</p>
+
+                    <p>Pentru a-l utiliza, trebuie să vă înregistrați în prealabil. După înregistrare, pentru a accesa La Meva Salut trebuie doar să introduceți documentul de identitate și numărul de telefon asociat. Sistemul va trimite prin SMS un cod de unică folosință, care trebuie introdus pentru finalizarea identificării.</p>
+
+                    <h3>3. Noul sistem de acces delegat pentru membrii familiei</h3>
+
+                    <p>Departamentul de Sănătate pregătește o funcționalitate care va permite autorizarea membrilor familiei sau a persoanelor de încredere pentru gestionarea profilului La Meva Salut al unei alte persoane.</p>
+
+                    <p>Persoana autorizată va putea accesa profilurile utilizatorilor care i-au acordat permisiunea din propriul cont, fără a fi nevoie să cunoască parolele acestora.</p>
+
+                    <p>Această măsură va fi deosebit de utilă pentru persoanele în vârstă sau pentru cele care întâmpină dificultăți digitale. În prezent există o opțiune similară pentru minori și persoane aflate sub tutelă, dar se dorește extinderea acesteia și la adulți.</p>
+
+                    <h3>4. Calendarul prevăzut</h3>
+
+                    <p>Tranziția se va realiza treptat și este prevăzut ca aceasta să fie finalizată la începutul anului 2027. Până în ianuarie, utilizatorii vor putea continua să solicite și să utilizeze parolele existente.</p>
+
+                    <div class="resum">
+                        <strong>Pe scurt</strong>
+
+                        <p>Principala schimbare va fi înlocuirea parolelor cu idCAT Mòbil ca sistem de acces la La Meva Salut.</p>
+
+                        <p>În paralel, va fi creat un sistem care va facilita gestionarea profilurilor altor utilizatori de către membrii familiei sau persoane de încredere, în special în cazul persoanelor în vârstă.</p>
+                    </div>
+                `,
+
+                peu: "Informații pentru utilizatorii La Meva Salut"
+            }
+
+        };
+
+
+        /* =========================
+           CANVI D'IDIOMA
+        ========================= */
+
+        function canviarIdioma() {
+
+            const idiomaSeleccionat =
+                document.getElementById("idioma").value;
+
+            const contingut =
+                continguts[idiomaSeleccionat];
+
+            if (!contingut) {
+                return;
+            }
+
+            document.documentElement.lang = idiomaSeleccionat;
+
+            document.getElementById("titol-capcalera").textContent =
+                contingut.titol;
+
+            document.getElementById("subtitol-capcalera").textContent =
+                contingut.subtitol;
+
+            document.getElementById("label-idioma").textContent =
+                contingut.label;
+
+            document.getElementById("titol").textContent =
+                contingut.titol;
+
+            document.getElementById("contingutNoticia").innerHTML =
+                contingut.contingut;
+
+            document.getElementById("peu-text").textContent =
+                contingut.peu;
+
+
+            /* Text àrab de dreta a esquerra */
+
+            if (idiomaSeleccionat === "ar") {
+
+                document.body.dir = "rtl";
+
+            } else {
+
+                document.body.dir = "ltr";
+
+            }
+
+        }
+
+
+        /* Quan es canvia l'idioma */
+
+        document.getElementById("idioma").addEventListener(
+            "change",
+            canviarIdioma
+        );
+
+
+        /* Idioma inicial */
+
+        canviarIdioma();
+
+    </script>
+
+</body>
+</html>
